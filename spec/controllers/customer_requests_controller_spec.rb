@@ -53,10 +53,10 @@ RSpec.describe CustomerRequestsController, type: :controller do
           status: 'Active',
           latitude: 41.9013087,
           longitude: -87.68276759999999,
-          service_radius: 1.0
+          service_radius: 100.0
         )
         sign_in company
-        company_service = create(:company_service,
+        create(:company_service,
           service_category_id: service_category.id,
           company_id: company.id
         )
@@ -66,7 +66,7 @@ RSpec.describe CustomerRequestsController, type: :controller do
           service_category_id: service_category.id,
           expires_date: Date.today + 2
         )
-        customer_request_3 = create(:customer_request,
+        create(:customer_request,
           latitude: 41.9013087,
           longitude: -87.68276759999999,
           service_category_id: service_category.id,
@@ -168,7 +168,16 @@ RSpec.describe CustomerRequestsController, type: :controller do
       customer = create(:customer)
       sign_in customer
       service_category = create(:service_category)
+<<<<<<< HEAD
       post :create, params: { customer_request: attributes_for(:customer_request, service_category_id: service_category.id) }
+=======
+      post :create, params: {
+        customer_request: attributes_for(
+          :customer_request,
+          service_category_id: service_category.id
+        )
+      }
+>>>>>>> 61112712af7c29b9387abd62910ce2d81d5c55e4
       expect(response).to redirect_to("/customers/#{customer.id}")
     end
   end
@@ -207,6 +216,7 @@ RSpec.describe CustomerRequestsController, type: :controller do
       end
     end
   end
+<<<<<<< HEAD
 
   describe 'PATCH #update' do
     it 'assigns all the service categories to @service_categories' do
@@ -250,6 +260,56 @@ RSpec.describe CustomerRequestsController, type: :controller do
       end
     end
 
+=======
+
+  describe 'PATCH #update' do
+    it 'assigns all the service categories to @service_categories' do
+      customer = create :customer
+      sign_in customer
+      customer_request = create(
+        :customer_request,
+        customer: customer,
+      )
+      service_category = create :service_category
+      put :update, params: {
+        id: customer_request.id,
+        customer_request: { id: customer_request.id }
+      }
+      expect(assigns(:categories)).to match_array(
+        [service_category, customer_request.service_category]
+      )
+    end
+
+    context 'with valid attributes' do
+      it 'updates the values of the customer_request' do
+        customer = create(:customer)
+        customer_request = create(:customer_request,
+          city: 'old city',
+          description: 'old description',
+          customer: customer
+        )
+        sign_in customer
+        put :update, params: {
+          id: customer_request.id,
+          customer_request: {
+            city: 'new city',
+            description: 'new description'
+          }
+        }
+        customer_request.reload
+        expect(customer_request.city).to eq('new city')
+        expect(customer_request.description).to eq('new description')
+      end
+    end
+
+    context 'with invalid attributes' do
+      it 'does not update the contact' do
+      end
+      it 're-renders the :edit template' do
+      end
+    end
+
+>>>>>>> 61112712af7c29b9387abd62910ce2d81d5c55e4
   end
 
   describe 'GET #edit' do
@@ -278,6 +338,7 @@ RSpec.describe CustomerRequestsController, type: :controller do
       sign_in customer
       @customer_request = create :customer_request, customer: customer
     end
+<<<<<<< HEAD
 
     context 'request not under contract' do
       context 'delete successful' do
@@ -343,6 +404,73 @@ RSpec.describe CustomerRequestsController, type: :controller do
         }.to change(CustomerRequest, :count).by(0)
       end
 
+=======
+
+    context 'request not under contract' do
+      context 'delete successful' do
+        it 'redirects to the index page' do
+          delete :destroy, params: { id: @customer_request.id }
+          expect(response).to redirect_to '/customer_requests'
+        end
+
+        it 'removes the customer request form the database' do
+          expect{
+            delete :destroy, params: { id: @customer_request.id }
+          }.to change(CustomerRequest, :count).by(-1)
+        end
+
+        it 'updates the flash message' do
+          delete :destroy, params: { id: @customer_request.id }
+          expect(flash[:success]).to eq(
+            "#{@customer_request.description} has been successfully cancelled"
+          )
+        end
+      end
+
+      context 'delete unsuccessful' do
+        before :each do
+          allow_any_instance_of(
+            CustomerRequest
+          ).to receive(:destroy).and_return(false)
+        end
+
+        it 'redirects to the edit page' do
+          delete :destroy, params: { id: @customer_request.id }
+          expect(response).to render_template :edit
+        end
+
+        it 'does not delete from the database' do
+          expect{
+            delete :destroy, params: { id: @customer_request.id }
+          }.to change(CustomerRequest, :count).by(0)
+        end
+
+        it 'updates the flash message' do
+          delete :destroy, params: { id: @customer_request.id }
+          expect(flash[:notice]).to eq(
+            'Something went wrong, please try again.'
+          )
+        end
+      end
+    end
+
+    context 'request under contract' do
+      before :each do
+        create :contract, customer_request: @customer_request
+      end
+
+      it 'renders the edit view' do
+        delete :destroy, params: { id: @customer_request.id }
+        expect(response).to render_template :edit
+      end
+
+      it 'does not delete from the database' do
+        expect{
+          delete :destroy, params: { id: @customer_request.id }
+        }.to change(CustomerRequest, :count).by(0)
+      end
+
+>>>>>>> 61112712af7c29b9387abd62910ce2d81d5c55e4
       it 'updates the flash message' do
         delete :destroy, params: { id: @customer_request.id }
         expect(flash[:notice]).to eq(

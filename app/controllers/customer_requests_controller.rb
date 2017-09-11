@@ -51,7 +51,10 @@ class CustomerRequestsController < ApplicationController
   end
 
   def update
+<<<<<<< HEAD
     puts "update"
+=======
+>>>>>>> 61112712af7c29b9387abd62910ce2d81d5c55e4
     @categories = ServiceCategory.all
     if @customer_request.update(customer_request_params)
       flash[:success] = "Request Succesfully Updated!"

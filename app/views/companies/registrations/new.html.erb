@@ -81,7 +81,11 @@
     <% @service_categories.each do |service_category| %>
 
     <div class="form-check">
+<<<<<<< HEAD
         <%= check_box_tag 'service_category[]', service_category.id, @services.include?(service_category.id.to_s) %> <%= service_category.name %>
+=======
+        <%= check_box_tag 'service_category[]', service_category.id, @selected_service_categories.include?(service_category.id.to_s) %> <%= service_category.name %>
+>>>>>>> 61112712af7c29b9387abd62910ce2d81d5c55e4
     <% end %>
   </div>
 
