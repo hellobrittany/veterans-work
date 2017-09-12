@@ -36,13 +36,10 @@ gem 'paperclip', '~> 5.0.0'
 gem 'aws-sdk', '~> 2.3'
 gem 'area'
 gem 'devise', '~> 4.3.0'
-gem 'cancancan', '~> 1.15.0'
-gem 'rolify', '~> 5.1.0'
 gem 'geocoder', '~> 1.4.3'
 gem 'rubocop', '~> 0.47.1', require: false
 gem 'figaro'
-# validate submited company websites
-gem 'validate_url'
+
 # pg_search allows fast seaching by any field on model
 gem 'pg_search'
 # react

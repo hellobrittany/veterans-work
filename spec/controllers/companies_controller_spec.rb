@@ -38,12 +38,14 @@
 #  avatar_content_type    :string
 #  avatar_file_size       :integer
 #  avatar_updated_at      :datetime
+#  credits                :integer
 #
 # Indexes
 #
 #  index_companies_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_companies_on_email                 (email) UNIQUE
 #  index_companies_on_reset_password_token  (reset_password_token) UNIQUE
+#
 
 require 'rails_helper'
 
@@ -124,7 +126,7 @@ RSpec.describe CompaniesController, type: :controller do
     end
 
     context 'customer with a contract linking to company' do
-      before :each do 
+      before :each do
         customer = create :customer
         sign_in customer
         @company = create :company
