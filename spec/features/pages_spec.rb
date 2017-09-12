@@ -1,11 +1,5 @@
 require 'rails_helper'
 
-<<<<<<< HEAD
-Rspec.describe 'Clicking the home button', :type => :feature do
-  visit '/about'
-  find_link('Home').click
-  expect(page).to have_content 'Connect Customers in Need with Veterans in Skilled Trades'
-=======
 RSpec.describe 'Clicking navbar links', :type => :feature do
 
   it 'goes to the homepage' do
@@ -34,7 +28,7 @@ RSpec.describe 'Clicking navbar links', :type => :feature do
 
   it 'goes to the Customer Sign-in page' do
     visit '/'
-    find('#customer-sign-in').click
+    page.find('#customer-sign-in').click
     expect(page).to have_content 'Customer Sign In'
   end
 end
@@ -43,16 +37,13 @@ RSpec.describe "Clicking content links on splash page", :type => :feature do
 
   it 'goes to the Company Sign-in page' do
     visit '/'
-    find('#company-sign-in').click
+    page.find('#company-sign-in').click
     expect(page).to have_content 'Company Sign In'
   end
 
   it 'goes to the Company Sign-up page' do
     visit '/'
-    find('#company-sign-up').click
-    expect(page).to have_content 'Company Sign Up'
+    page.find('#company-sign-up').click
+    expect(page).to have_content 'Company Registration'
   end
-
-
->>>>>>> a1adea3bad17ab15eecc2da4d201c086e1d81adb
 end
